@@ -93,6 +93,13 @@ app.delete('/delete/:id', (req, res) => {
   servicesCollection.findOneAndDelete({_id: id})
   .then(documents => res.send(!!documents.value))
 })
+app.post('/isAdmin', (req, res) => {
+  const email = req.body.email;
+  adminCollection.find({email : email})
+  .toArray((err,admin) => {
+    res.send(admin.length > 0)
+  })
+})
 
 });
 
