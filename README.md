@@ -7,10 +7,9 @@ Crystal Events is a event management website which is developed by Iqbal Ahmed. 
 * Express.js
 * MongoDB
 
-A authorized user can add or delete product, can see the previous order. 
 Two Types of user can visit this site
 * Common User
 * Admin User
-
+A admin user can add or delete product,
 ## Live Site
 [http://localhost:5000/](http://localhost:5000/)
