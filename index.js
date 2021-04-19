@@ -20,6 +20,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
   const servicesCollection = client.db("crystalEvents").collection("services");
   const reviewsCollection = client.db("crystalEvents").collection("reviews");
+  const ordersCollection = client.db("crystalEvents").collection("orders");
+  const adminCollection = client.db("crystalEvents").collection("Admins");
   console.log('database connection successfully')
 
   app.get('/services', (req, res) => {
@@ -37,6 +39,36 @@ client.connect(err => {
         console.log('from database', items)
     })
   })
+  app.get('/admin', (req, res) => {
+    adminCollection.find()
+    .toArray((err, items) => {
+        res.send(items)
+        console.log('from database', items)
+    })
+  })
+  app.get('/orders', (req, res) => {
+    ordersCollection.find()
+    .toArray((err, items) => {
+        res.send(items)
+        console.log('from database', items)
+    })
+  })
+
+  app.post('/addAdmin', (req,res) => {
+    const admin = req.body;
+    adminCollection.insertOne(admin)
+    .then(result => {
+        res.send(result.insertedCount > 0)
+    })
+})
+
+  app.post('/addOrders', (req,res) => {
+    const orders = req.body;
+    ordersCollection.insertOne(orders)
+    .then(result => {
+        res.send(result.insertedCount > 0)
+    })
+})
 
 
   app.post('/addServices', (req,res) => {
@@ -61,7 +93,6 @@ app.delete('/delete/:id', (req, res) => {
   servicesCollection.findOneAndDelete({_id: id})
   .then(documents => res.send(!!documents.value))
 })
-
 
 });
 
