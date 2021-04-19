@@ -53,6 +53,14 @@ client.connect(err => {
         console.log('from database', items)
     })
   })
+  app.get('/orders', (req, res) => {
+    ordersCollection.find({email:req.query.email})
+    .toArray((err, items) => {
+        res.send(items)
+        console.log('from database', items)
+    })
+  })
+
 
   app.post('/addAdmin', (req,res) => {
     const admin = req.body;
